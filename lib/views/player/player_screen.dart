@@ -65,7 +65,7 @@ class PlayerScreen extends StatelessWidget {
                         songData[controller.currentPlayIndex.value]
                             .displayNameWOExt,
                         overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
+                        maxLines: 2,
                         style: AppStyles.textStyle(
                           color: AppColors.bgDarkColor,
                           fontSize: 24,
