@@ -40,7 +40,7 @@ class HomeScreen extends StatelessWidget {
           uriType: UriType.EXTERNAL,
         ),
         builder: (context, snapshot) {
-          print(snapshot.data);
+          debugPrint("snapshot: ${snapshot.data}");
           if (snapshot.data == null) {
             return const Center(
               child: CircularProgressIndicator(),
@@ -68,10 +68,14 @@ class HomeScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(12),
                       ),
                       tileColor: AppColors.bgColor,
-                      leading: const Icon(
-                        Icons.music_note,
-                        color: AppColors.whiteColor,
-                        size: 32,
+                      leading: QueryArtworkWidget(
+                        id: snapshot.data![index].id,
+                        type: ArtworkType.AUDIO,
+                        nullArtworkWidget: const Icon(
+                          Icons.music_note,
+                          color: AppColors.whiteColor,
+                          size: 32,
+                        ),
                       ),
                       title: Text(
                         snapshot.data![index].displayName,
@@ -86,10 +90,27 @@ class HomeScreen extends StatelessWidget {
                           fontWeight: FontWeight.normal,
                         ),
                       ),
-                      trailing: const Icon(
-                        Icons.play_arrow,
-                        color: AppColors.whiteColor,
-                        size: 26,
+                      trailing: Obx(
+                        () => IconButton(
+                          onPressed: () {
+                            controller.isPlaying.value
+                                ? controller.pauseMusic(
+                                    index: index,
+                                  )
+                                : controller.playMusic(
+                                    path: snapshot.data![index].uri,
+                                    playIndex: index,
+                                  );
+                          },
+                          icon: Icon(
+                            controller.currentPlayIndex.value == index &&
+                                    controller.isPlaying.value
+                                ? Icons.pause_rounded
+                                : Icons.play_arrow_rounded,
+                            color: AppColors.whiteColor,
+                            size: 26,
+                          ),
+                        ),
                       ),
                     ),
                   );
