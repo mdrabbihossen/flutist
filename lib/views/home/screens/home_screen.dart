@@ -77,7 +77,7 @@ class HomeScreen extends StatelessWidget {
                               );
                         Get.to(
                           () => PlayerScreen(
-                            songData: snapshot.data![index],
+                            songData: snapshot.data!,
                           ),
                         );
                       },

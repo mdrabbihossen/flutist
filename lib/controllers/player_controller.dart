@@ -83,4 +83,48 @@ class PlayerController extends GetxController {
     Duration duration = Duration(seconds: seconds.inSeconds);
     audioPlayer.seek(duration);
   }
+  // skip previous
+  skipPrevious() async {
+    if (currentPlayIndex.value == 0) {
+      currentPlayIndex.value = 0;
+    } else {
+      currentPlayIndex.value--;
+    }
+    playMusic(
+      path: await audioQuery.querySongs(
+        ignoreCase: true,
+        orderType: OrderType.ASC_OR_SMALLER,
+        sortType: null,
+        uriType: UriType.EXTERNAL,
+      ).then((value) => value[currentPlayIndex.value].data),
+      playIndex: currentPlayIndex.value,
+    );
+  }
+  // next
+  skipNext() async {
+    if (currentPlayIndex.value == await audioQuery.querySongs(
+      ignoreCase: true,
+      orderType: OrderType.ASC_OR_SMALLER,
+      sortType: null,
+      uriType: UriType.EXTERNAL,
+    ).then((value) => value.length - 1)) {
+      currentPlayIndex.value = await audioQuery.querySongs(
+        ignoreCase: true,
+        orderType: OrderType.ASC_OR_SMALLER,
+        sortType: null,
+        uriType: UriType.EXTERNAL,
+      ).then((value) => value.length - 1);
+    } else {
+      currentPlayIndex.value++;
+    }
+    playMusic(
+      path: await audioQuery.querySongs(
+        ignoreCase: true,
+        orderType: OrderType.ASC_OR_SMALLER,
+        sortType: null,
+        uriType: UriType.EXTERNAL,
+      ).then((value) => value[currentPlayIndex.value].data),
+      playIndex: currentPlayIndex.value,
+    );
+  }
 }
