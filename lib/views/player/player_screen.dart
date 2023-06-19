@@ -93,7 +93,10 @@ class PlayerScreen extends StatelessWidget {
                               activeColor: AppColors.sliderColor,
                               inactiveColor: AppColors.bgColor,
                               value: 0.0,
-                              onChanged: (value) {},
+                              onChanged: (value) {
+                                controller.durationToSeconds(value.toInt());
+                                value = value;
+                              },
                             ),
                           ),
                           Text(

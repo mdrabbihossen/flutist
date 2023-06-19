@@ -11,6 +11,8 @@ class PlayerController extends GetxController {
   RxBool isPlaying = false.obs;
   RxString durations = "".obs;
   RxString positions = "".obs;
+  RxDouble maxDuration = 0.0.obs;
+  RxDouble songValue = 0.0.obs;
 
   @override
   void onInit() {
@@ -24,10 +26,12 @@ class PlayerController extends GetxController {
     // for the duration
     audioPlayer.durationStream.listen((duration) {
       durations.value = duration.toString().split(".")[0];
+      maxDuration.value = duration!.inSeconds.toDouble();
     });
     // for the position
     audioPlayer.positionStream.listen((position) {
       positions.value = position.toString().split(".")[0];
+      songValue.value = position.inSeconds.toDouble();
     });
   }
 
@@ -39,7 +43,6 @@ class PlayerController extends GetxController {
       checkPermission();
     }
   }
-
 
 // check permission end
 // play music
@@ -71,5 +74,13 @@ class PlayerController extends GetxController {
     } on Exception catch (e) {
       debugPrint("error: $e");
     }
+  }
+
+// pause music end
+
+  // duration to seconds
+  durationToSeconds(seconds) async {
+    Duration duration = Duration(seconds: seconds.inSeconds);
+    audioPlayer.seek(duration);
   }
 }
