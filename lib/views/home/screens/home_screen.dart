@@ -54,16 +54,19 @@ class HomeScreen extends StatelessWidget {
             );
           } else {
             return Padding(
-              padding: const EdgeInsets.all(8.0),
+              padding: const EdgeInsets.all(10.0),
               child: ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
                   return Container(
-                    margin: const EdgeInsets.only(bottom: 5),
+                    margin: const EdgeInsets.only(bottom: 7),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: ListTile(
+                      onTap: (){
+
+                      },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
                       ),
