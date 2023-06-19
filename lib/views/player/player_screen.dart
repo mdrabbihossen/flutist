@@ -22,27 +22,29 @@ class PlayerScreen extends StatelessWidget {
         padding: const EdgeInsets.fromLTRB(8, 8, 8, 0),
         child: Column(
           children: [
-            Expanded(
-              child: Container(
-                height: 300,
-                width: 300,
-                clipBehavior: Clip.antiAliasWithSaveLayer,
-                alignment: Alignment.center,
-                decoration: const BoxDecoration(),
-                child: QueryArtworkWidget(
-                  id: songData[controller.currentPlayIndex.value].id,
-                  type: ArtworkType.AUDIO,
-                  artworkFit: BoxFit.contain,
-                  artworkQuality: FilterQuality.high,
-                  quality: 100,
-                  artworkHeight: double.infinity,
-                  artworkWidth: double.infinity,
-                  nullArtworkWidget: const CircleAvatar(
-                    radius: 500,
-                    child: Icon(
-                      Icons.music_note,
-                      size: 48,
-                      color: AppColors.whiteColor,
+            Obx(
+              () => Expanded(
+                child: Container(
+                  height: 300,
+                  width: 300,
+                  clipBehavior: Clip.antiAliasWithSaveLayer,
+                  alignment: Alignment.center,
+                  decoration: const BoxDecoration(),
+                  child: QueryArtworkWidget(
+                    id: songData[controller.currentPlayIndex.value].id,
+                    type: ArtworkType.AUDIO,
+                    artworkFit: BoxFit.contain,
+                    artworkQuality: FilterQuality.high,
+                    quality: 100,
+                    artworkHeight: double.infinity,
+                    artworkWidth: double.infinity,
+                    nullArtworkWidget: const CircleAvatar(
+                      radius: 500,
+                      child: Icon(
+                        Icons.music_note,
+                        size: 48,
+                        color: AppColors.whiteColor,
+                      ),
                     ),
                   ),
                 ),
@@ -66,6 +68,7 @@ class PlayerScreen extends StatelessWidget {
                             .displayNameWOExt,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 2,
+                        textAlign: TextAlign.center,
                         style: AppStyles.textStyle(
                           color: AppColors.bgDarkColor,
                           fontSize: 24,
