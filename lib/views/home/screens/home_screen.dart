@@ -1,6 +1,7 @@
 import 'package:flutist/controllers/player_controller.dart';
 import 'package:flutist/utils/colors.dart';
 import 'package:flutist/utils/styles.dart';
+import 'package:flutist/views/player/player_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:on_audio_query/on_audio_query.dart';
@@ -58,14 +59,22 @@ class HomeScreen extends StatelessWidget {
               child: ListView.builder(
                 itemCount: snapshot.data!.length,
                 itemBuilder: (context, index) {
+                  final musicData = snapshot.data![index];
                   return Container(
                     margin: const EdgeInsets.only(bottom: 7),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: ListTile(
-                      onTap: (){
-
+                      onTap: () {
+                        Get.to(
+                          () => PlayerScreen(
+                            musicName: musicData.displayNameWOExt,
+                            artistName: musicData.artist == "<unknown>"
+                                ? "Fazley Rabby"
+                                : musicData.artist!,
+                          ),
+                        );
                       },
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(12),
@@ -81,13 +90,13 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       title: Text(
-                        snapshot.data![index].displayName,
+                        musicData.displayNameWOExt,
                         style: AppStyles.textStyle(
                           fontSize: 15,
                         ),
                       ),
                       subtitle: Text(
-                        snapshot.data![index].artist!,
+                        musicData.artist!,
                         style: AppStyles.textStyle(
                           fontSize: 12,
                           fontWeight: FontWeight.normal,
@@ -101,7 +110,7 @@ class HomeScreen extends StatelessWidget {
                                     index: index,
                                   )
                                 : controller.playMusic(
-                                    path: snapshot.data![index].uri,
+                                    path: musicData.uri,
                                     playIndex: index,
                                   );
                           },
