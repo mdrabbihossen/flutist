@@ -1,3 +1,4 @@
+import 'package:flutist/utils/colors.dart';
 import 'package:flutist/views/home/screens/home_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -13,7 +14,14 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      theme: ThemeData(
+        scaffoldBackgroundColor: AppColors.bgDarkColor,
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Colors.transparent,
+          elevation: 0,
+        ),
+      ),
+      home: const HomeScreen(),
     );
   }
 }
