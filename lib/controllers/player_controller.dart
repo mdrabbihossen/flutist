@@ -9,11 +9,26 @@ class PlayerController extends GetxController {
   final audioPlayer = AudioPlayer();
   RxInt currentPlayIndex = 0.obs;
   RxBool isPlaying = false.obs;
+  RxString durations = "".obs;
+  RxString positions = "".obs;
+
   @override
   void onInit() {
     // TODO: implement onInit
     super.onInit();
     checkPermission();
+  }
+
+  // update position
+  updatePosition() async {
+    // for the duration
+    audioPlayer.durationStream.listen((duration) {
+      durations.value = duration.toString().split(".")[0];
+    });
+    // for the position
+    audioPlayer.positionStream.listen((position) {
+      positions.value = position.toString().split(".")[0];
+    });
   }
 
   // check permission
@@ -24,6 +39,7 @@ class PlayerController extends GetxController {
       checkPermission();
     }
   }
+
 
 // check permission end
 // play music
@@ -38,6 +54,7 @@ class PlayerController extends GetxController {
       );
       audioPlayer.play();
       isPlaying.value = true;
+      updatePosition();
     } on Exception catch (e) {
       debugPrint("error: $e");
     }

@@ -67,12 +67,17 @@ class HomeScreen extends StatelessWidget {
                     ),
                     child: ListTile(
                       onTap: () {
+                        controller.isPlaying.value
+                            ? controller.pauseMusic(
+                                index: index,
+                              )
+                            : controller.playMusic(
+                                path: musicData.uri,
+                                playIndex: index,
+                              );
                         Get.to(
                           () => PlayerScreen(
-                            musicName: musicData.displayNameWOExt,
-                            artistName: musicData.artist == "<unknown>"
-                                ? "Fazley Rabby"
-                                : musicData.artist!,
+                            songData: snapshot.data![index],
                           ),
                         );
                       },
@@ -103,25 +108,13 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       trailing: Obx(
-                        () => IconButton(
-                          onPressed: () {
-                            controller.isPlaying.value
-                                ? controller.pauseMusic(
-                                    index: index,
-                                  )
-                                : controller.playMusic(
-                                    path: musicData.uri,
-                                    playIndex: index,
-                                  );
-                          },
-                          icon: Icon(
-                            controller.currentPlayIndex.value == index &&
-                                    controller.isPlaying.value
-                                ? Icons.pause_rounded
-                                : Icons.play_arrow_rounded,
-                            color: AppColors.whiteColor,
-                            size: 26,
-                          ),
+                        () => Icon(
+                          controller.currentPlayIndex.value == index &&
+                                  controller.isPlaying.value
+                              ? Icons.pause_rounded
+                              : Icons.play_arrow_rounded,
+                          color: AppColors.whiteColor,
+                          size: 26,
                         ),
                       ),
                     ),
